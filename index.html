@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criador de Faixas</title>
+</head>
+<body>
+    <h1>Criador de Faixas para Balões de Ar Quente</h1>
+    <form id="formCriarFaixa" action="/criar_faixa" method="post" enctype="multipart/form-data">
+        <label for="altura">Altura da Faixa (cm):</label>
+        <input type="number" id="altura" name="altura" required><br><br>
+
+        <label for="larguraCima">Largura em Cima (cm):</label>
+        <input type="number" id="larguraCima" name="larguraCima" required><br><br>
+
+        <label for="larguraBaixo">Largura em Baixo (cm):</label>
+        <input type="number" id="larguraBaixo" name="larguraBaixo" required><br><br>
+
+        <label for="numGomos">Número de Gomos:</label>
+        <input type="number" id="numGomos" name="numGomos" required><br><br>
+
+        <label for="logo">Logo do Cliente (PNG):</label>
+        <input type="file" id="logo" name="logo" accept="image/png" required><br><br>
+
+        <button type="submit">Criar Faixa</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('formCriarFaixa').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var form = document.getElementById('formCriarFaixa');
+            var formData = new FormData(form);
+
+            fetch('/criar_faixa', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById('resultado').innerHTML = result;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+    </script>
+</body>
+</html>
